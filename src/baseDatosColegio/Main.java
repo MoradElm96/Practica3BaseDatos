@@ -25,7 +25,7 @@ public class Main {
 
         if (con != null) {
 
-            System.out.println("conectado correctamente");
+            System.out.println("Se ha conectado a la base datos  correctamente");
 
             String sentencia = "SELECT * FROM cambios";
 
@@ -60,7 +60,7 @@ public class Main {
         } else {
             System.out.println("no se ha podido conectar");
         }
-
+        cerrarConexion(con);
        
 
     }
@@ -89,6 +89,7 @@ public class Main {
     public static void cerrarConexion(Connection conn) {
         try {
             conn.close();
+            System.out.println("La conexion a la base de datos se ha cerrado correctamente");
         } catch (SQLException e) {
             System.out.println("la conexion no se ha cerrado");
             System.out.println(e.getMessage().toString());
