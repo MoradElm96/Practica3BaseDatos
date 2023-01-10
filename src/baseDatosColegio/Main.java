@@ -27,33 +27,36 @@ public class Main {
 
             System.out.println("Se ha conectado a la base datos  correctamente");
 
-            String sentencia = "SELECT * FROM cambios";
-
-            Statement stConsulta = con.createStatement();
-            stConsulta.execute(sentencia);
+                //sentencia para recuperar los registros de la tabla cambios
+            String sentenciaCambios = "SELECT * FROM cambios";
+            //registro para recuperar la tabla alumnos
+            String sentenciaAlumnos="SELECT * FROM alumnos";
+            Statement st = null;
+            ResultSet rs;
             
-            ResultSet rsConsulta = stConsulta.executeQuery(sentencia);
-            
-            
-            sentencia = "SELECT * FROM ALUMNOS where id=?";
-            PreparedStatement psConsultarEnAlumnos = con.prepareStatement(sentencia);
-            
+            rs = st.executeQuery(sentenciaCambios);
+            while(rs.next()){
+                //recuperamos los valores de cada registro
+                int matricula = rs.getInt("Matricula");
+                String tipo = rs.getString("Tipo");
+                int incremento = rs.getInt("Incremento");
+                //sentencia para recuperar la nota indicando la matricula
+                String sentenciaNota = "SELECT Nota FROM alumnos WHERE Matricula=?";
+                //
+                String sentenciaModificar = "UPDATE alumnos SET Nota=? WHERE Matricula =?";
+                String sentenciaAlta ="INSERT INTO alumnos (Matricula, Nota) VALUES(?,?)";
+                //creamos los objetos necesarios
+                PreparedStatement sentenciaNotaPreparada = con.prepareStatement(sentenciaNota);
+                PreparedStatement sentenciaModificarPreparada = con.prepareStatement(sentenciaModificar);
+                PreparedStatement sentenciaAltaPreparada = con.prepareStatement(sentenciaAlta);
           
-            
-            while(rsConsulta.next()){
-                int id = rsConsulta.getInt("Id");
-                String tipo = rsConsulta.getString("Tipo");//tambien se puede poner el numero de columna
+                //asignamos a los rs los registros recuperados de la tabla alumnos
+                rs = st.executeQuery(sentenciaAlumnos);
                 
-                System.out.println("tipo "+ tipo);
-             
-                //psConsultarEnAlumnos.setS
-               // ResultSet rsAlumnos = consultarEnAlumnos.executeQuery();
-                
-                
+              //  sentenciaModificarPreparada.setInt(1, nota);
                 
                 
             }
-            
             
             
 
